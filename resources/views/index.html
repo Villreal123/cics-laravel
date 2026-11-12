@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <title>CICS Consultation Appointment System</title>
+    <link rel="stylesheet" href="public/css/style.css">
+    <script src="public/js/script.js"></script>
+
+</head>
+<body>
+<meta name="base-url" content="{{ url('/') }}">
+    <header class="topbar">
+        <div class="brand-mark">CICS</div>
+        <div>
+            <h1>College of Information and Computing Sciences</h1>
+            <p>Consultation Appointment System</p>
+        </div>
+    </header>
+
+    <main class="container">
+
+        <section class="welcome">
+            <div>
+                <p class="eyebrow">STUDENT SERVICES</p>
+                <h2>Manage Your Consultations</h2>
+                <p class="muted">Schedule, view, update, and cancel your appointments.</p>
+            </div>
+            <div class="welcome-icon">▦</div>
+        </section>
+
+        <!-- CREATE AND UPDATE -->
+        <section class="panel">
+            <div class="section-heading">
+                <div>
+                    <h2 id="formHeading">Book a Consultation</h2>
+                    <p class="muted">Fill out the appointment details.</p>
+                </div>
+                <span class="tag">Appointment Form</span>
+            </div>
+
+            <div id="formAlert" class="alert hidden" role="alert"></div>
+
+            <form id="appointmentForm" novalidate>
+                <input type="hidden" id="editId">
+
+                <div class="form-grid">
+                    <label>Student Name
+                        <input type="text" id="studentName" placeholder="Enter your full name" required>
+                        <small class="field-error" data-for="student_name"></small>
+                    </label>
+
+                    <label>Student ID
+                        <input type="text" id="studentId" placeholder="Enter your student ID" required>
+                        <small class="field-error" data-for="student_id"></small>
+                    </label>
+
+                    <label>Course / Year & Section
+                        <input type="text" id="courseSection" placeholder="e.g., BSIT 2A" required>
+                        <small class="field-error" data-for="course_section"></small>
+                    </label>
+
+                    <label>Instructor
+                        <input type="text" id="instructor" placeholder="Enter instructor's name" required>
+                        <small class="field-error" data-for="instructor"></small>
+                    </label>
+
+                    <label>Consultation Date
+                        <input type="date" id="consultDate" required>
+                        <small class="field-error" data-for="consult_date"></small>
+                    </label>
+
+                    <label>Consultation Time
+                        <input type="time" id="consultTime" required>
+                        <small class="field-error" data-for="consult_time"></small>
+                    </label>
+
+                    <label class="full">Reason for Consultation
+                        <textarea id="reason" rows="3" placeholder="Why do you need a consultation?" required></textarea>
+                        <small class="field-error" data-for="reason"></small>
+                    </label>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn primary" id="submitBtn">Create Appointment</button>
+                    <button type="button" class="btn secondary hidden" id="cancelEditBtn">Cancel Edit</button>
+                </div>
+            </form>
+        </section>
+
+        <!-- READ -->
+        <section class="panel">
+            <div class="section-heading list-heading">
+                <div>
+                    <h2>Appointment Records</h2>
+                    <p class="muted">View and manage scheduled consultations.</p>
+                </div>
+                <div class="count">
+                    <span id="appointmentCount">0</span>
+                    <small>appointments</small>
+                </div>
+            </div>
+
+            <div class="toolbar">
+                <input type="search" id="searchInput" placeholder="Search by student, ID, or instructor">
+                <select id="statusFilter">
+                    <option value="all">All statuses</option>
+                    <option value="pending">Pending</option>
+                    <option value="confirmed">Confirmed</option>
+                    <option value="completed">Completed</option>
+                    <option value="cancelled">Cancelled</option>
+                </select>
+            </div>
+
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Student</th>
+                            <th>Instructor</th>
+                            <th>Date & Time</th>
+                            <th>Reason</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="appointmentList"></tbody>
+                </table>
+            </div>
+
+            <p id="emptyMessage" class="empty">No appointments found. Create your first appointment above.</p>
+        </section>
+
+        <p class="footnote">CICS Consultation Appointment System | Student Services</p>
+    </main>
+
+    <div id="toast" class="toast hidden" role="status"></div>
+
+    <script src="{{ asset('js/script.js') }}"></script>
+</body>
+</html>
